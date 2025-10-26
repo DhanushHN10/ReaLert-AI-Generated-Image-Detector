@@ -35,7 +35,7 @@ def collate_fn(batch, is_train=True):
     labels = torch.tensor([item["label"] for item in batch])
     return {"pixel_values": images, "labels": labels}
 
-# Top-level functions for Windows multiprocessing
+
 def collate_fn_train(batch):
     return collate_fn(batch, is_train=True)
 
@@ -44,9 +44,9 @@ def collate_fn_val(batch):
 
 def get_dataLoaders(train_ds, val_ds, batch_size=32):
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True,
-                              collate_fn=collate_fn_train, num_workers=4, pin_memory=True)
+                              collate_fn=collate_fn_train, num_workers=5, pin_memory=True)
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False,
-                            collate_fn=collate_fn_val, num_workers=4, pin_memory=True)
+                            collate_fn=collate_fn_val, num_workers=5, pin_memory=True)
     return train_loader, val_loader
 
 if __name__ == "__main__":
