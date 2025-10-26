@@ -149,7 +149,7 @@ def predict():
                 'error': 'Missing image_url in request body'
             }), 400
         
-        image_url = data['image_url']
+        image_url = data['image']
         
         print(f"Received request for: {image_url}")
         
