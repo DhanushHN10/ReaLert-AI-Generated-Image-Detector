@@ -63,6 +63,7 @@ def predict_route():
 
 
     image_url = data['image'] 
+    print(image_url)
 
     try:
         
@@ -74,6 +75,7 @@ def predict_route():
         image = Image.open(io.BytesIO(response.content)).convert("RGB")
 
     except requests.exceptions.RequestException as e:
+        print("hello")
         return jsonify({"error": f"Failed to download or open image: {str(e)}"}), 400
     except Exception as e:
         return jsonify({"error": f"An error occurred processing the image: {str(e)}"}), 500
