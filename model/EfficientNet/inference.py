@@ -243,6 +243,6 @@ if __name__ == '__main__':
     # Run Flask app
     app.run(
         host='0.0.0.0',  # Accessible from other devices
-        port=5000,        # Port number
+        port=5173,        # Port number
         debug=False       # Set to False in production
     )
