@@ -25,7 +25,7 @@ try:
 except Exception as e:
     print(f"--- FATAL ERROR: Could not load model. ---")
     print(e)
-  
+ 
 
 ImgSize = 224
 transform = transforms.Compose([
@@ -46,15 +46,23 @@ print("Model loaded successfully. Ready to accept requests.")
 
 
 
+@app.route("/", methods=["GET"])
+def home_route():
+   
+    return "API is up and running. Use the /predict endpoint to make predictions."
+
+
 
 @app.route("/predict", methods=["POST"])
 def predict_route():
 
     data = request.get_json()
-    if not data or 'image' not in data:
+   
+    if not data or 'image' not in data: 
         return jsonify({"error": "Missing 'image' url in JSON payload"}), 400
 
-    image_url = data['image']
+
+    image_url = data['image'] 
 
     try:
         
@@ -62,7 +70,7 @@ def predict_route():
         
         response.raise_for_status() 
         
-      
+    
         image = Image.open(io.BytesIO(response.content)).convert("RGB")
 
     except requests.exceptions.RequestException as e:
@@ -77,22 +85,26 @@ def predict_route():
         outputs = model(image_tensor)
         all_probs = torch.softmax(outputs.logits, dim=1)[0]
         
-
         probabilities = {}
         for index, label_name in label_map.items():
             probability = all_probs[index].item()
-         
-            probabilities[label_name] = f"{probability * 100:.2f}%"
+            probabilities[label_name] = round(probability * 100, 2)
 
-        pred = torch.argmax(all_probs).item()
-        confidence = all_probs[pred].item()
-        label = label_map.get(pred, f"Class {pred}")
+        pred_index = torch.argmax(all_probs).item()
+        confidence = round(all_probs[pred_index].item() * 100, 2) 
+        pred_label = label_map.get(pred_index, f"Class {pred_index}")
 
-      
+   
         result = {
-            "full_probability_distribution": probabilities,
-            "final_prediction": label,
-            "confidence": f"{confidence * 100:.2f}%"
+            "image_url": image_url, 
+            "prediction": {
+                "category": pred_label,
+                "class_id": pred_index,
+                "class_name": pred_label,
+                "confidence": confidence,
+                "probabilities": probabilities
+            },
+            "success": True
         }
     
     return jsonify(result)
