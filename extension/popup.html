@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Image Detector</title>
+    <link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+        </div>
+        <div>
+            <h1 class="header-title">AI Image Detector</h1>
+        </div>
+        <div class="header-buttons">
+            <button id="historyBtn" class="history-btn">History</button>
+            <button id="backBtn" class="back-btn">Back</button>
+            <button id="clearHistoryBtn" class="clear-history-btn">Clear</button>
+            <button id="modelBtn" class="model-btn">Model</button>
+            <div id="modelDropdown" class="model-dropdown hidden">
+                <div class="dropdown-option" data-model="model1">M1</div>
+                <div class="dropdown-option" data-model="model2">M2</div>
+                <div class="dropdown-option" data-model="model3">M3</div>
+            </div>
+        </div>
+    </header>
+
+    <div id="error-message" class="error-message" style="display: none;">
+        Something went wrong while analyzing the image.
+    </div>
+
+    <div id="idle-state" class="idle-container">
+        <div class="idle-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+        </div>
+        <h2 class="idle-title">No image selected</h2>
+        <p class="idle-text">Right-click on an image and choose “Detect AI Image” to analyze it here.</p>
+    </div>
+
+    <div id="image-card-container" class="image-card-container" style="display: none;">
+        <div class="image-card">
+            <div class="image-wrapper">
+                <img id="analyzed-image" src="" alt="Analyzed content" />
+                <div id="loader-overlay" class="loader-overlay" style="display: none;">
+                    <div>
+                        <svg class="loader-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <p>Analyzing...</p>
+                    </div>
+                </div>
+            </div>
+            <div id="result-content" class="card-content" style="display: none;">
+                <div class="card-info">
+                    <span id="result-badge" class="card-badge">Result</span>
+                    <div id="category-block" class="category-block" style="display: none;">
+                        <p class="category-label">Category</p>
+                        <input type="text" id="category-input" class="category-input" placeholder="e.g., AI-generated"
+                            readonly />
+                    </div>
+
+                    <div id="confidence-block" class="confidence-block" style="display: none;">
+                        <p class="confidence-label">Confidence</p>
+                        <div class="confidence-bar-container">
+                            <div id="confidence-bar" class="confidence-bar"></div>
+                            <!-- <h1>hiiiiiiiiiiiiiiiii</h1> -->
+                        </div>
+                        <p id="confidence-score" class="confidence-score">0%</p>
+                    </div>
+                </div>
+                <p id="result-reason" class="card-reason"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="historyContainer" class="history-container" style="display:none;"></div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

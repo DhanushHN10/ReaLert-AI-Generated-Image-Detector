@@ -1,0 +1,5 @@
+curl -X GET -G 'https://api.sightengine.com/1.0/check.json' \\
+     -d 'models=genai' \
+     -d 'api_user=1495048728' \
+     -d 'api_secret=2r5uQaf9Feekjh4G6W4XtiUex4c8V3QV' \
+     --data-urlencode 'url=https://drive.usercontent.google.com/download?id=1mkCVQ9XBqZ9ao2KquJk9leiwoWhdb7c0&export=view&authuser=0'
