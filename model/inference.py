@@ -143,7 +143,7 @@ def predict():
         # Get request data
         data = request.get_json()
         
-        if not data or 'image_url' not in data:
+        if not data or 'image' not in data:
             return jsonify({
                 'success': False,
                 'error': 'Missing image_url in request body'
